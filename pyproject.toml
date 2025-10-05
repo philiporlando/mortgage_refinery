@@ -1,7 +1,7 @@
 [project]
 name = "mortgage_refinery"
 version = "0.1.0"
-description = "Notify me when to refinance my mortgage..."
+description = "Notify me when refinancing my mortgage will save money."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
