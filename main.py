@@ -89,7 +89,7 @@ def main() -> None:
         send_email(
             config,
             subject="OnPoint Mortgage Rate Alert",
-            body=f"{term} is now {rate}%, which is below your threshold of {threshold}%.",
+            body=f"{term} is now {rate}%, which is below your threshold of {threshold}%. It's time to refinance!",
         )
 
 if __name__ == "__main__":
