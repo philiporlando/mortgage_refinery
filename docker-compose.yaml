@@ -2,15 +2,17 @@ services:
   mortgage-refinery:
     build: .
     container_name: mortgage-refinery
-    restart: unless-stopped
+    restart: unless-stopped  # Keep running for continuous polling
     env_file:
       - .env
     volumes:
-      # Mount config if you're using file-based config
-      - ./config.yaml:/app/config.yaml:ro
-    # Add a healthcheck or use external scheduler
+      # Persist rate tracking state between restarts
+      - rate-state:/tmp
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
+
+volumes:
+  rate-state:
