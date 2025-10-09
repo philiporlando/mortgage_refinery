@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 CHECK_INTERVAL_SECONDS = 300
 TERM = "30 year fixed rate"
 URL = "https://www.onpointcu.com/home-loans/"
-
+    
 
 def fetch_html(url: str) -> str:
     """Fetch HTML content from a URL."""
