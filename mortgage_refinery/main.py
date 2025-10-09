@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-CHECK_INTERVAL_SECONDS = 60
+CHECK_INTERVAL_SECONDS = 300
 TERM = "30 year fixed rate"
 URL = "https://www.onpointcu.com/home-loans/"
 
