@@ -14,8 +14,11 @@
       ],
       "settings": {
         "python.defaultInterpreterPath": "/usr/local/bin/python",
-        "python.linting.enabled": true,
-        "python.formatting.provider": "none",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll": "explicit",
+          "source.organizeImports": "explicit"
+        },
         "[python]": {
           "editor.defaultFormatter": "charliermarsh.ruff",
           "editor.formatOnSave": true,
@@ -23,11 +26,14 @@
             "source.fixAll": "explicit",
             "source.organizeImports": "explicit"
           }
-        }
+        },
+        "ruff.lineLength": 100
       }
     }
   },
   "forwardPorts": [],
   "postCreateCommand": "uv sync",
-  "remoteUser": "vscode"
+  "containerEnv": {
+    "UV_LINK_MODE": "copy"
+  }
 }
