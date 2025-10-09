@@ -1,8 +1,7 @@
-
-from email.message import EmailMessage
+import smtplib
 from email.mime.text import MIMEText
 from typing import Any, Dict
-import smtplib
+
 
 def send_email(config: Dict[str, Any], subject: str, body: str) -> None:
     smtp_config = config.get("smtp")
@@ -10,9 +9,9 @@ def send_email(config: Dict[str, Any], subject: str, body: str) -> None:
     sender = smtp_config.get("username")
     recipients = email_config.get("recipients")
     msg = MIMEText(body)
-    msg['Subject'] = subject
-    msg['From'] = sender
-    msg['To'] = ", ".join(recipients)
+    msg["Subject"] = subject
+    msg["From"] = sender
+    msg["To"] = ", ".join(recipients)
     with smtplib.SMTP(smtp_config.get("host"), smtp_config.get("port")) as smtp_server:
         if smtp_config.get("use_tls"):
             smtp_server.starttls()

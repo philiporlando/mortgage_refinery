@@ -1,10 +1,11 @@
 import os
-from pydantic import BaseModel, Field
-import yaml
 from pathlib import Path
 from typing import Any, Dict
 
+import yaml
 from dotenv import load_dotenv
+from pydantic import BaseModel, Field
+
 
 class SMTPConfig(BaseModel):
     host: str
@@ -29,7 +30,7 @@ def load_config() -> Dict[str, Any]:
     """Load configuration from config.yaml if it exists."""
     load_dotenv()
     deployment = os.environ.get("DEPLOYMENT", "development")
-    data =  yaml.safe_load(Path("config.yaml").read_text())
+    data = yaml.safe_load(Path("config.yaml").read_text())
     profile = data.get("profiles", {}).get(deployment)
     config = ProfileConfig.model_validate(profile)
     return config.model_dump() if isinstance(config, BaseModel) else None

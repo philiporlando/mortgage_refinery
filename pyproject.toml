@@ -17,11 +17,13 @@ mortgage-refinery = "mortgage_refinery.main:main"
 
 [tool.uv]
 package = true
-dev-dependencies = [
+
+[dependency-groups]
+dev = [
+    "mypy>=1.18.2",
     "ruff>=0.1.0",
     "pytest>=7.4.0",
     "types-requests>=2.32.4.20250913",
-    "mypy>=1.18.2",
 ]
 
 [tool.ruff]

@@ -1,11 +1,10 @@
-import requests
-from bs4 import BeautifulSoup
 import logging
+
+import requests
 from bs4 import BeautifulSoup, Tag
 
-from mortgage_refinery.email import send_email
 from mortgage_refinery.config import load_config
-
+from mortgage_refinery.email import send_email
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -44,7 +43,7 @@ def get_mortgage_rate(table, term: str) -> float:
     for row in table.find_all("tr", class_="co-rates_table--row"):
         rate = extract_rate_from_row(row, term)
         if rate:
-            return float(rate.replace('%', '').strip())
+            return float(rate.replace("%", "").strip())
     raise ValueError(f"{term} not found in the rates table.")
 
 
@@ -63,6 +62,7 @@ def main() -> None:
             subject="OnPoint Mortgage Rate Alert",
             body=f"{term} is now {rate}%, which is below your threshold of {threshold}%. It's time to refinance!",
         )
+
 
 if __name__ == "__main__":
     main()
