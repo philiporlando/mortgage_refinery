@@ -1,0 +1,24 @@
+default: &default
+  smtp:
+    host: "<your SMTP host here>"
+    port: <your SMTP port here>
+    username: "<your email here>"
+    password: "<your password here>"
+    use_tls: true
+    use_ssl: false
+
+profiles:
+  development:
+    <<: *default
+    threshold: 10.0
+    email:
+      to:
+        - "<recipient email here>"
+
+  production:
+    <<: *default
+    threshold: 5.0
+    email:
+      to:
+        - "<recipient email here>"
+        - "<another recipient email here>"
