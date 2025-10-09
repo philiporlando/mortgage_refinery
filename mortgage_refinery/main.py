@@ -1,14 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 import logging
-import smtplib
-import ssl
-from email.message import EmailMessage
-from email.mime.text import MIMEText
-from pathlib import Path
-from typing import Any, Dict, Optional
 from bs4 import BeautifulSoup, Tag
-import yaml
+
+from mortgage_refinery.email import send_email
+from mortgage_refinery.config import load_config
 
 
 logging.basicConfig(level=logging.INFO)
@@ -50,30 +46,6 @@ def get_mortgage_rate(table, term: str) -> float:
         if rate:
             return float(rate.replace('%', '').strip())
     raise ValueError(f"{term} not found in the rates table.")
-
-
-def load_config() -> Dict[str, Any]:
-    """Load configuration from config.yaml if it exists."""
-    config_path = Path("config.yaml")
-    if config_path.exists():
-        with open(config_path, "r") as file:
-            return yaml.safe_load(file)
-    raise ValueError("config.yaml not found.")
-
-
-def send_email(config: Dict[str, Any], subject: str, body: str) -> None:
-    smtp_config = config.get("smtp")
-    email_config = config.get("email")
-    sender = email_config.get("from")
-    recipients = email_config.get("to")
-    msg = MIMEText(body)
-    msg['Subject'] = subject
-    msg['From'] = sender
-    msg['To'] = ", ".join(recipients)
-    with smtplib.SMTP_SSL(smtp_config.get("host"), smtp_config.get("port")) as smtp_server:
-       smtp_server.login(smtp_config.get("username"), smtp_config.get("password"))
-       smtp_server.sendmail(sender, recipients, msg.as_string())
-    print("Message sent!")
 
 
 def main() -> None:

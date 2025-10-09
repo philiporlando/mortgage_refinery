@@ -1,13 +1,33 @@
 [project]
 name = "mortgage_refinery"
 version = "0.1.0"
-description = "Notify me when refinancing my mortgage will save money."
+description = "Monitor mortgage rates and notify via email when rates drop below a specified threshold."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "beautifulsoup4>=4.14.2",
-    "mypy[requests]>=1.18.2",
+    "dotenv>=0.9.9",
+    "pydantic>=2.12.0",
     "pyyaml>=6.0.3",
     "requests>=2.32.5",
-    "types-requests>=2.32.4.20250913",
 ]
+
+[project.scripts]
+mortgage-refinery = "mortgage_refinery.main:main"
+
+[tool.uv]
+package = true
+dev-dependencies = [
+    "ruff>=0.1.0",
+    "pytest>=7.4.0",
+    "types-requests>=2.32.4.20250913",
+    "mypy>=1.18.2",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W"]
+ignore = []

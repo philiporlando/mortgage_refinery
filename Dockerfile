@@ -1,6 +1,9 @@
 FROM python:3.13-slim-trixie
 
-RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 ADD https://astral.sh/uv/install.sh /uv-installer.sh
 RUN sh /uv-installer.sh && rm /uv-installer.sh
@@ -11,4 +14,4 @@ ADD . /app
 WORKDIR /app
 RUN uv sync --locked
 
-CMD ["uv", "run", "main.py"]
+CMD ["uv", "run", "mortgage-refinery"]

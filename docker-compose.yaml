@@ -1,0 +1,16 @@
+services:
+  mortgage-refinery:
+    build: .
+    container_name: mortgage-refinery
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      # Mount config if you're using file-based config
+      - ./config.yaml:/app/config.yaml:ro
+    # Add a healthcheck or use external scheduler
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
