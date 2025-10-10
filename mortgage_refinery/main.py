@@ -64,13 +64,18 @@ def check_and_notify(config, tracker) -> None:
         tracker.record_check(current_rate)
 
         if tracker.should_send_alert(current_rate, threshold):
+            previous_alert = (
+                f"Previous alert was for: {tracker.history.last_alerted_rate}%\n"
+                if tracker.history.last_alerted_rate
+                else ""
+            )
             send_email(
                 config,
                 subject=f"Mortgage Rate Alert: {TERM} now {current_rate}%",
                 body=(
                     f"Great news! The {TERM} has dropped to {current_rate}%.\n\n"
                     f"This is below your threshold of {threshold}%.\n"
-                    f"Previous alert was for: {tracker.history.last_alerted_rate}%.\n\n"
+                    f"{previous_alert}.\n\n"
                     f"It might be time to refinance!\n\n"
                     f"---\n"
                     f"{tracker.get_summary()}"

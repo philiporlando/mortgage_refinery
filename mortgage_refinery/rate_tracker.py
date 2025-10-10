@@ -33,7 +33,7 @@ class RateTracker:
     def _load_history(self) -> RateHistory:
         """Load rate history from state file."""
         if not self.state_file.exists():
-            logger.info("No existing reate history found, starting fresh.")
+            logger.info("No existing rate history found, starting fresh.")
             return RateHistory()
 
         try:
