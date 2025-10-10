@@ -102,7 +102,6 @@ def main() -> None:
         return
 
     tracker = RateTracker()
-    logger.info(f"Current tracking state:\n{tracker.get_summary()}")
 
     while True:
         try:
