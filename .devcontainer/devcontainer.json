@@ -13,7 +13,7 @@
         "tamasfe.even-better-toml"
       ],
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.defaultInterpreterPath": ".venv/bin/python",
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
           "source.fixAll": "explicit",
@@ -32,7 +32,7 @@
     }
   },
   "forwardPorts": [],
-  "postCreateCommand": "uv sync",
+  "postCreateCommand": "uv sync --group dev",
   "containerEnv": {
     "UV_LINK_MODE": "copy"
   }
