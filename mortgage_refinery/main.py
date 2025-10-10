@@ -1,4 +1,3 @@
-import logging
 import time
 
 import requests
@@ -6,11 +5,8 @@ from bs4 import BeautifulSoup, Tag
 
 from mortgage_refinery.config import load_config
 from mortgage_refinery.email import send_email
+from mortgage_refinery.logging import logger
 from mortgage_refinery.rate_tracker import RateTracker
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
 
 CHECK_INTERVAL_SECONDS = 300
 TERM = "30 year fixed rate"

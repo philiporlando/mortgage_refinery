@@ -1,12 +1,11 @@
 import json
-import logging
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
 from pydantic import BaseModel
 
-logger = logging.getLogger(__name__)
+from mortgage_refinery.logging import logger
 
 
 class RateHistory(BaseModel):
