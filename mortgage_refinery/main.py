@@ -75,7 +75,7 @@ def check_and_notify(config, tracker) -> None:
                 body=(
                     f"Great news! The {TERM} has dropped to {current_rate}%.\n\n"
                     f"This is below your threshold of {threshold}%.\n"
-                    f"{previous_alert}.\n\n"
+                    f"{previous_alert}\n\n"
                     f"It might be time to refinance!\n\n"
                     f"---\n"
                     f"{tracker.get_summary()}"
