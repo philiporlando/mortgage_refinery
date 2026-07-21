@@ -20,10 +20,15 @@ class EmailConfig(BaseModel):
     recipients: list[str] = Field(..., alias="to")
 
 
+class HealthConfig(BaseModel):
+    admin_email: str
+
+
 class ProfileConfig(BaseModel):
     threshold: float
     smtp: SMTPConfig
     email: EmailConfig
+    health: HealthConfig
 
 
 def load_config() -> Dict[str, Any]:

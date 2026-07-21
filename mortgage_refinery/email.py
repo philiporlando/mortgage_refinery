@@ -1,13 +1,15 @@
 import smtplib
 from email.mime.text import MIMEText
-from typing import Any, Dict
+from typing import Any, Dict, List, Optional
 
 
-def send_email(config: Dict[str, Any], subject: str, body: str) -> None:
+def send_email(
+    config: Dict[str, Any], subject: str, body: str, recipients: Optional[List[str]] = None
+) -> None:
     smtp_config = config.get("smtp")
-    email_config = config.get("email")
     sender = smtp_config.get("username")
-    recipients = email_config.get("recipients")
+    if recipients is None:
+        recipients = config.get("email").get("recipients")
     msg = MIMEText(body)
     msg["Subject"] = subject
     msg["From"] = sender

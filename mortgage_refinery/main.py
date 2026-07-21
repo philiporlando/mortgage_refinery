@@ -11,12 +11,18 @@ from mortgage_refinery.rate_tracker import RateTracker
 
 CHECK_INTERVAL_SECONDS = 300
 TERM = "30 year fixed rate"
-URL = "https://www.onpointcu.com/home-loans/"
+URL = "https://www.onpointcu.com/home-loans/mortgage-loans/"
+REQUEST_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/120.0 Safari/537.36"
+    )
+}
 
 
 def fetch_html(url: str) -> str:
     """Fetch HTML content from a URL."""
-    response = requests.get(url)
+    response = requests.get(url, headers=REQUEST_HEADERS)
     response.raise_for_status()  # Raise an error for bad responses
     return response.text
 

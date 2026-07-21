@@ -6,6 +6,8 @@ default: &default
     password: "<your password here>"
     use_tls: true
     use_ssl: false
+  health:
+    admin_email: "<admin email to receive app health/failure alerts>"
 
 profiles:
   development:

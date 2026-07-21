@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional
 from mortgage_refinery.email import send_email
 from mortgage_refinery.logging import logger
 
-ALERT_COOLDOWN_SECONDS = 3600  # re-alert at most once per hour while still unhealthy
+ALERT_COOLDOWN_SECONDS = 86400  # re-alert at most once per day while still unhealthy
 
 
 class HealthMonitor:
@@ -35,6 +35,7 @@ class HealthMonitor:
 
     def _send_alert(self, config: Dict[str, Any], error: Exception) -> None:
         try:
+            admin_email = config.get("health").get("admin_email")
             send_email(
                 config,
                 subject="Mortgage Refinery: app is unhealthy",
@@ -44,6 +45,7 @@ class HealthMonitor:
                     f"Latest error:\n{error}\n\n"
                     f"Check the container logs for the full traceback."
                 ),
+                recipients=[admin_email],
             )
             logger.info("Health alert email sent.")
         except Exception as e:
@@ -51,6 +53,7 @@ class HealthMonitor:
 
     def _send_recovery(self, config: Dict[str, Any]) -> None:
         try:
+            admin_email = config.get("health").get("admin_email")
             send_email(
                 config,
                 subject="Mortgage Refinery: app has recovered",
@@ -58,6 +61,7 @@ class HealthMonitor:
                     f"The mortgage-refinery health check succeeded again after "
                     f"{self.consecutive_failures} consecutive failure(s)."
                 ),
+                recipients=[admin_email],
             )
             logger.info("Health recovery email sent.")
         except Exception as e:
