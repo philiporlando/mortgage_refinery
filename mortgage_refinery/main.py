@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup, Tag
 
 from mortgage_refinery.config import load_config
 from mortgage_refinery.email import send_email
+from mortgage_refinery.health import HealthMonitor
 from mortgage_refinery.logging import logger
 from mortgage_refinery.rate_tracker import RateTracker
 
@@ -50,7 +51,7 @@ def get_mortgage_rate(table, term: str) -> float:
     raise ValueError(f"{term} not found in the rates table.")
 
 
-def check_and_notify(config, tracker) -> None:
+def check_and_notify(config, tracker, health) -> None:
     """Check the current rate and send notification if conditions are met."""
     threshold = config.get("threshold")
 
@@ -86,8 +87,11 @@ def check_and_notify(config, tracker) -> None:
         else:
             logger.info("No alert sent (conditions not met).")
 
+        health.record_success(config)
+
     except Exception as e:
         logger.error(f"Error checking reatges: {e}", exc_info=True)
+        health.record_failure(config, e)
 
 
 def main() -> None:
@@ -103,15 +107,17 @@ def main() -> None:
         return
 
     tracker = RateTracker()
+    health = HealthMonitor()
 
     while True:
         try:
-            check_and_notify(config, tracker)
+            check_and_notify(config, tracker, health)
         except KeyboardInterrupt:
             logger.info("Shutting down gracefully...")
             break
         except Exception as e:
             logger.error(f"Unexpected error in main loop: {e}", exc_info=True)
+            health.record_failure(config, e)
 
         logger.info(f"Next check in {CHECK_INTERVAL_SECONDS} seconds...")
         time.sleep(CHECK_INTERVAL_SECONDS)
