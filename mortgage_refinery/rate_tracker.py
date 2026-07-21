@@ -60,7 +60,8 @@ class RateTracker:
         """Determine if an alert should be sent based on the current rate and history."""
         if current_rate >= threshold:
             logger.info(
-                f"Current rate ({current_rate}%) is above threshold ({threshold}%), no alert needed."
+                f"Current rate ({current_rate}%) is above threshold "
+                f"({threshold}%), no alert needed."
             )
             return False
 
@@ -72,7 +73,8 @@ class RateTracker:
 
         if current_rate < self.history.last_alerted_rate:
             logger.info(
-                f"Rate dropped from {self.history.last_alerted_rate}% to {current_rate}%, sending alert."
+                f"Rate dropped from {self.history.last_alerted_rate}% to "
+                f"{current_rate}%, sending alert."
             )
             return True
 
@@ -107,11 +109,12 @@ class RateTracker:
             f"Latest rate: {self.history.last_checked_rate}%",
         ]
 
-        if self.history.last_alerted_rate is not None:
+        if self.history.last_alerted_rate is not None and self.history.last_alert_time is not None:
             summary.extend(
                 [
                     f"Last alerted rate: {self.history.last_alerted_rate}%",
-                    f"Last alert time: {self.history.last_alert_time.strftime('%Y-%m-%d %H:%M:%S')}",
+                    "Last alert time: "
+                    f"{self.history.last_alert_time.strftime('%Y-%m-%d %H:%M:%S')}",
                     f"Total alerts sent: {self.history.alert_count}",
                 ]
             )

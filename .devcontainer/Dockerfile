@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Starship
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 RUN echo 'eval "$(starship init bash)"' >> /root/.bashrc
 

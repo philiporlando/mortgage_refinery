@@ -10,7 +10,7 @@ ALERT_COOLDOWN_SECONDS = 86400  # re-alert at most once per day while still unhe
 class HealthMonitor:
     """Tracks consecutive check failures and emails the admin when the app is unhealthy."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.consecutive_failures = 0
         self.last_alert_time: Optional[float] = None
 
@@ -35,7 +35,7 @@ class HealthMonitor:
 
     def _send_alert(self, config: Dict[str, Any], error: Exception) -> None:
         try:
-            admin_email = config.get("health").get("admin_email")
+            admin_email = config["health"]["admin_email"]
             send_email(
                 config,
                 subject="Mortgage Refinery: app is unhealthy",
@@ -53,7 +53,7 @@ class HealthMonitor:
 
     def _send_recovery(self, config: Dict[str, Any]) -> None:
         try:
-            admin_email = config.get("health").get("admin_email")
+            admin_email = config["health"]["admin_email"]
             send_email(
                 config,
                 subject="Mortgage Refinery: app has recovered",
